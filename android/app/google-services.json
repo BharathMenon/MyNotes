@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "503507364599",
+    "project_id": "bharath-flutter",
+    "storage_bucket": "bharath-flutter.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:503507364599:android:c7e87fa2de356a582081f2",
+        "android_client_info": {
+          "package_name": "com.bharath.mynotes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "503507364599-dt0uihq2jatphvf1t8ij3abrig6754hb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBcL7jKJrKt-UaXFSHn1UAjxptLuXkayAk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "503507364599-dt0uihq2jatphvf1t8ij3abrig6754hb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

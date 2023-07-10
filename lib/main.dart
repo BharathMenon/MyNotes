@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart%20%20';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:mynotes/constants/routes.dart';
+import 'package:mynotes/utilities/show_error_dialog.dart';
 import 'package:mynotes/views/login_view.dart';
 import 'package:mynotes/views/register_view.dart';
 import 'package:mynotes/views/verify_email_view.dart';
@@ -56,7 +57,11 @@ class HomePage extends StatelessWidget {
               return const NotesView();
 
             default:
-              return const CircularProgressIndicator();
+              return const SizedBox(
+                width: 50.0,
+                height: 50.0,
+                child: CircularProgressIndicator(),
+              );
           }
         });
   }
@@ -106,28 +111,4 @@ class _NotesViewState extends State<NotesView> {
       body: const Text('Hello World'),
     );
   }
-}
-
-Future<bool> showLogoutDialog(BuildContext context) {
-  return showDialog<bool>(
-    context: context,
-    builder: (context) {
-      return AlertDialog(
-        title: const Text('Sign Out'),
-        content: const Text('Are you sure you want to sign out?'),
-        actions: [
-          TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(true);
-              },
-              child: const Text('Yes')),
-          TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(false);
-              },
-              child: const Text('Cancel'))
-        ],
-      );
-    },
-  ).then((value) => value ?? false);
 }

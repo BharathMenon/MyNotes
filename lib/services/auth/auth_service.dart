@@ -7,6 +7,7 @@ class AuthService implements AuthProvider {
   final AuthProvider provider;
 
   const AuthService(this.provider);
+  factory AuthService.firebase() => AuthService(FirebaseAuthProvider());
 
   @override
   // TODO: implement CurrentUser
@@ -31,4 +32,7 @@ class AuthService implements AuthProvider {
 
   @override
   Future<void> sendEmailVerification() => provider.sendEmailVerification();
+
+  @override
+  Future<void> initialize() => provider.initialize();
 }

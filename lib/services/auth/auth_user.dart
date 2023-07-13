@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 class AuthUser {
   final bool isEmailverified;
 
-  const AuthUser(this.isEmailverified);
-  factory AuthUser.fromFirebase(User user) => AuthUser(user.emailVerified);
+  const AuthUser({required this.isEmailverified});
+  //Now, we have to pass AuthUser(isEmailverified: true/false) instead of AuthUser(True/False)
+  factory AuthUser.fromFirebase(User user) =>
+      AuthUser(isEmailverified: user.emailVerified);
 }

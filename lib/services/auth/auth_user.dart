@@ -4,9 +4,14 @@ import 'package:flutter/material.dart';
 @immutable //This class all it's subclasses are always immutable.
 class AuthUser {
   final bool isEmailverified;
-
-  const AuthUser({required this.isEmailverified});
+  final String? email;
+  const AuthUser({
+    required this.email,
+    required this.isEmailverified,
+  });
   //Now, we have to pass AuthUser(isEmailverified: true/false) instead of AuthUser(True/False)
-  factory AuthUser.fromFirebase(User user) =>
-      AuthUser(isEmailverified: user.emailVerified);
+  factory AuthUser.fromFirebase(User user) => AuthUser(
+        email: user.email,
+        isEmailverified: user.emailVerified,
+      );
 }

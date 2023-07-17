@@ -69,8 +69,8 @@ class _NewNotesViewState extends State<NewNotesView> {
 
   @override
   void dispose() {
-    _saveNoteiftextnotempty();
     _deleteNoteiftextisEmpty();
+    _saveNoteiftextnotempty();
     _textController.dispose();
     super.dispose();
   }
@@ -95,7 +95,7 @@ class _NewNotesViewState extends State<NewNotesView> {
                 ),
               );
             default:
-              return const Center(child: const CircularProgressIndicator());
+              return const Center(child: CircularProgressIndicator());
           }
         },
       ),

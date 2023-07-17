@@ -21,12 +21,6 @@ class _NotesViewState extends State<NotesView> {
     super.initState();
   }
 
-  @override
-  void dispose() {
-    _notesService.close();
-    super.dispose();
-  }
-
   String get userEmail => AuthService.firebase().CurrentUser!.email!;
   @override
   Widget build(BuildContext context) {
@@ -75,12 +69,31 @@ class _NotesViewState extends State<NotesView> {
               return StreamBuilder(
                 stream: _notesService.allNotes,
                 builder: (context, snapshot) {
-                  switch (ConnectionState) {
+                  switch (snapshot.connectionState) {
                     case ConnectionState.waiting:
                     case ConnectionState.active:
-                      return const Text('Waiting for all Notes...');
+                      if (snapshot.hasData) {
+                        final allnotes = snapshot.data as List<DatabaseNote>;
+                        return ListView.builder(
+                          itemCount: allnotes.length,
+                          itemBuilder: (context, index) {
+                            final note = allnotes[index];
+                            return ListTile(
+                              title: Text(
+                                note.text,
+                                maxLines: 1,
+                                softWrap: true,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            );
+                          },
+                        );
+                      } else {
+                        return const CircularProgressIndicator();
+                      }
+
                     default:
-                      return Center(child: const CircularProgressIndicator());
+                      return const Center(child: CircularProgressIndicator());
                   }
                 },
               );

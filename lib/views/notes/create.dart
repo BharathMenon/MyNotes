@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mynotes/services/auth/auth_service.dart';
+import 'package:mynotes/services/cloud/cloud_note.dart';
+import 'package:mynotes/services/cloud/firebase_cloud_storage.dart';
 import 'package:sqflite/sqflite.dart';
 
 import '../../services/crud/notes_service.dart';
@@ -12,12 +14,12 @@ class NewNotesView extends StatefulWidget {
 }
 
 class _NewNotesViewState extends State<NewNotesView> {
-  DatabaseNote? _note;
-  late final NotesService _notesService;
+  CloudNote? _note;
+  late final FirebaseCloudStorage _notesService;
   late final TextEditingController _textController;
   @override
   void initState() {
-    _notesService = NotesService();
+    _notesService = FirebaseCloudStorage();
     _textController = TextEditingController();
     super.initState();
   }
@@ -29,7 +31,7 @@ class _NewNotesViewState extends State<NewNotesView> {
     }
     final text = _textController.text;
     await _notesService.updateNote(
-      note: note,
+      documentId: note.documentId,
       text: text,
     );
   }
@@ -39,21 +41,22 @@ class _NewNotesViewState extends State<NewNotesView> {
     _textController.addListener(_textControllerListener);
   }
 
-  Future<DatabaseNote> createNewNote() async {
+  Future<CloudNote> createNewNote() async {
     final existingNote = _note;
     if (existingNote != null) {
       return existingNote;
     }
     final currentUser = AuthService.firebase().CurrentUser;
     final email = currentUser!.email;
-    final owner = await _notesService.getUser(email: email);
-    return await _notesService.createNote(owner: owner);
+
+    return await _notesService.createNewNote(
+        ownerUserId: existingNote!.ownerUserId);
   }
 
   void _deleteNoteiftextisEmpty() {
     final note = _note;
     if (_textController.text.isEmpty && note != null) {
-      _notesService.deleteNote(id: note.id);
+      _notesService.deletenote(documentId: note.documentId);
     }
   }
 
@@ -61,7 +64,7 @@ class _NewNotesViewState extends State<NewNotesView> {
     final note = _note;
     if (_textController.text.isNotEmpty && note != null) {
       await _notesService.updateNote(
-        note: note,
+        documentId: note.documentId,
         text: _textController.text,
       );
     }

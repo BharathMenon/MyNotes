@@ -16,6 +16,6 @@ class CloudNote {
 // QueryDocumentSnapshot is just a wrapper on the Database Note which is a <Map<String,dynamic>.
   CloudNote.fromSnapshot(QueryDocumentSnapshot<Map<String, dynamic>> snapshot)
       : documentId = snapshot.id,
-        ownerUserId = snapshot.data()[ownerUserIdFieldName],
+        ownerUserId = snapshot.data()[ownerUserIdFieldName] ?? '',
         text = snapshot.data()[textFieldName];
 }

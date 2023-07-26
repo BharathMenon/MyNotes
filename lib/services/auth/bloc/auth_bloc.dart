@@ -10,7 +10,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       await provider.initialize();
       final user = provider.CurrentUser;
       if (user == null) {
-        emit(const AuthStateLoggedOut());
+        emit(const AuthStateLoggedOut(null));
       } else if (!user.isEmailverified) {
         emit(const AuthStateNeedsVerification());
       } else {
@@ -19,7 +19,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     });
     //log in
     on<AuthEventLogIn>((event, emit) async {
-      emit(const AuthstateLoading());
+      // emit(const AuthstateLoading()); We don't really need this..
       final email = event.Email;
       final password = event.password;
       try {
@@ -29,7 +29,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         );
         emit(AuthstateLoggedIn(user));
       } on Exception catch (e) {
-        emit(AuthStateLoginFailure(
+        emit(AuthStateLoggedOut(
             e)); // In dart, exceptions are of Object type, as anything can be returned as an object.
       }
     });
@@ -37,7 +37,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       try {
         emit(const AuthstateLoading());
         await provider.logOut();
-        emit(const AuthStateLoggedOut());
+        emit(const AuthStateLoggedOut(null));
       } on Exception catch (e) {
         emit(AuthStateLogoutFailure(e));
       }

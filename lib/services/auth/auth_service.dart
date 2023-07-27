@@ -10,7 +10,6 @@ class AuthService implements AuthProvider {
   factory AuthService.firebase() => AuthService(FirebaseAuthProvider());
 
   @override
-  // TODO: implement CurrentUser
   AuthUser? get CurrentUser => provider.CurrentUser;
 
   @override

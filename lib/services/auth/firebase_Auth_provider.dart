@@ -59,6 +59,7 @@ class FirebaseAuthProvider implements AuthProvider {
         email: email,
         password: password,
       );
+      //await Future.delayed(const Duration(seconds: 3));
       final user = CurrentUser;
       if (user != null) {
         return user;

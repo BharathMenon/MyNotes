@@ -5,16 +5,17 @@ import 'package:mynotes/services/auth/bloc/auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   // default state
-  AuthBloc(AuthProvider provider) : super(const AuthStateUninitialized()) {
+  AuthBloc(AuthProvider provider)
+      : super(const AuthStateUninitialized(isLoading: true)) {
     on<AuthEventInitialize>((event, emit) async {
       await provider.initialize();
       final user = provider.CurrentUser;
       if (user == null) {
         emit(const AuthStateLoggedOut(exception: null, isLoading: false));
       } else if (!user.isEmailverified) {
-        emit(const AuthStateNeedsVerification());
+        emit(const AuthStateNeedsVerification(false));
       } else {
-        emit(AuthstateLoggedIn(user));
+        emit(AuthstateLoggedIn(user: user, isLoading: false));
       }
     });
     //send email Verification
@@ -27,7 +28,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     //log in
     on<AuthEventLogIn>((event, emit) async {
       // emit(const AuthstateLoading()); We don't really need this..
-      emit(const AuthStateLoggedOut(exception: null, isLoading: true));
+      emit(const AuthStateLoggedOut(
+        exception: null,
+        isLoading: true,
+        loadingText: 'Please wait while we log you in',
+      ));
       final email = event.Email;
       final password = event.password;
       try {
@@ -40,13 +45,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             exception: null,
             isLoading: false,
           )); //Just to disable the loading screen.
-          emit(const AuthStateNeedsVerification());
+          emit(const AuthStateNeedsVerification(false));
         } else {
           emit(const AuthStateLoggedOut(
             exception: null,
             isLoading: false,
           ));
-          emit(AuthstateLoggedIn(user));
+          emit(AuthstateLoggedIn(user: user, isLoading: false));
         }
       } on Exception catch (e) {
         emit(AuthStateLoggedOut(
@@ -62,9 +67,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           await provider.createUser(
               email: event.email, password: event.password);
           await provider.sendEmailVerification();
-          emit(const AuthStateNeedsVerification());
+          emit(const AuthStateNeedsVerification(false));
         } on Exception catch (e) {
-          emit(AuthStateRegistering(e));
+          emit(AuthStateRegistering(exception: e, isLoading: false));
         }
       },
     );

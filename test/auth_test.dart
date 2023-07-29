@@ -66,6 +66,17 @@ void main() {
       );
       expect(provider.CurrentUser, isNotNull);
     });
+
+    test('Should be able to send a reset password Email', () async {
+      await provider.initialize();
+      await provider.createUser(email: 'email', password: 'password');
+      await provider.sendPasswordReset(Email: 'Nonexistent');
+      expect(provider.sentresetpassword, false);
+      await provider.sendPasswordReset(Email: 'Noneuser');
+      expect(provider.sentresetpassword, false);
+      await provider.sendPasswordReset(Email: 'jkrr');
+      expect(provider.sentresetpassword, true);
+    });
   });
 }
 
@@ -73,9 +84,11 @@ class NotinitializedException implements Exception {}
 
 class MockAuthProvider implements AuthProvider {
   AuthUser? _user;
+  var _sentresetpassword = true;
   var _isinitialized =
-      false; //_ before a avariable meas that it exists only in this private field.
+      false; //_ before a avariable means that it exists only in this private field.
   bool get isinitialized => _isinitialized;
+  bool get sentresetpassword => _sentresetpassword;
   @override
   AuthUser? get CurrentUser => _user;
 
@@ -131,5 +144,21 @@ class MockAuthProvider implements AuthProvider {
     const newUser =
         AuthUser(id: 'anyid', isEmailverified: true, email: 'fooobar');
     _user = newUser;
+  }
+
+  @override
+  Future<void> sendPasswordReset({required String Email}) async {
+    _sentresetpassword = true;
+    if (!isinitialized) throw NotinitializedException();
+    if (Email == 'Nonexistent') {
+      _sentresetpassword = false;
+      //throw InvalidEmailAuthException();
+    }
+    if (Email == 'Noneuser') {
+      _sentresetpassword = false;
+      //throw UserNotFoundAuthException();
+    }
+
+    Future.delayed(const Duration(seconds: 2));
   }
 }

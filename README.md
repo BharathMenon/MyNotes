@@ -1,11 +1,7 @@
-# mynotes
+# MyNotes
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
+Introducing MyNotes, a basic secure Note sharing application that allows users to create and interact with their notes dynamically. I created this using the flutter SDK and the dart programming language.
+Huge Respect for Vandad Nahavandipoor(https://github.com/vandadnp) for his amazing playlist(https://www.youtube.com/watch?v=IfUjHNODRoM&list=PL6yRaaP0WPkVtoeNIGqILtRAgd3h2CNpT) because of which this was possible!
 A few resources to get you started if this is your first Flutter project:
 
 - [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)

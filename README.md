@@ -10,3 +10,7 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+# Download the APK
+Go to https://github.com/BharathMenon/MyNotes/tree/main/build/app/outputs/flutter-apk or select the file named build/app/outputs/flutter-apk in the list of files.
+Then click on it and navigate to the app-release.apk, where you can click on "View raw" to download the apk file!

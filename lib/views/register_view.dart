@@ -53,16 +53,24 @@ class _RegisterViewState extends State<RegisterView> {
         }
       },
       child: Scaffold(
-        appBar: AppBar(title: const Text('Register')),
+        appBar: AppBar(
+          title: const Text('Register'),
+          backgroundColor: const Color.fromARGB(255, 35, 34, 33),
+        ),
         body: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.symmetric(vertical: 32.0, horizontal: 16.0),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment
                   .start, // Aligns column children to the left. Text field doesn't change.
               children: [
-                const Text(
-                    'Enter your email and password to start creating notes!'),
+                const SizedBox(
+                  height: 80,
+                  child: Text(
+                    'Enter your email and password to start creating notes!',
+                    style: TextStyle(fontFamily: 'REM', fontSize: 18),
+                  ),
+                ),
                 Column(
                   children: [
                     TextField(
@@ -72,22 +80,29 @@ class _RegisterViewState extends State<RegisterView> {
                         autofocus: true,
                         keyboardType: TextInputType.emailAddress,
                         decoration: const InputDecoration(
-                          hintText: 'Enter your email here',
-                        )),
-                    TextField(
-                        controller: _password,
-                        obscureText: true,
-                        enableSuggestions: false,
-                        autocorrect: false,
-                        decoration: const InputDecoration(
-                          hintText: 'Enter your password here',
-                        ))
+                            hintText: 'Enter your email here',
+                            hintStyle: TextStyle(
+                                fontStyle: FontStyle.italic,
+                                color: Color.fromARGB(255, 183, 181, 173)))),
+                    SizedBox(
+                      height: 85,
+                      child: TextField(
+                          controller: _password,
+                          obscureText: true,
+                          enableSuggestions: false,
+                          autocorrect: false,
+                          decoration: const InputDecoration(
+                              hintText: 'Enter your password here',
+                              hintStyle: TextStyle(
+                                  fontStyle: FontStyle.italic,
+                                  color: Color.fromARGB(255, 183, 181, 173)))),
+                    )
                   ],
                 ),
                 Center(
                   child: Column(
                     children: [
-                      TextButton(
+                      ElevatedButton(
                         onPressed: () async {
                           final email = _email.text;
                           final password = _password.text;
@@ -96,16 +111,34 @@ class _RegisterViewState extends State<RegisterView> {
                                 password,
                               ));
                         },
-                        child: const Text('Register'),
+                        style: ButtonStyle(
+                          minimumSize:
+                              MaterialStateProperty.all(const Size(200, 50)),
+                          backgroundColor: const MaterialStatePropertyAll(
+                              Color.fromARGB(255, 35, 34, 33)),
+                          shape:
+                              MaterialStateProperty.all(RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(100.0),
+                            side: const BorderSide(
+                                color: Color.fromARGB(255, 35, 34, 33)),
+                          )),
+                        ),
+                        child: const Text('Register',
+                            style: TextStyle(fontSize: 20)),
                       ),
-                      TextButton(
-                          onPressed: () {
-                            context
-                                .read<AuthBloc>()
-                                .add(const AuthEventLogOut());
-                          },
-                          child: const Text(
-                              'Already have an Account? Login here.'))
+                      Padding(
+                        padding: const EdgeInsets.all(22.0),
+                        child: TextButton(
+                            onPressed: () {
+                              context
+                                  .read<AuthBloc>()
+                                  .add(const AuthEventLogOut());
+                            },
+                            child: const Text(
+                                'Already have an Account? Login here.',
+                                style: TextStyle(
+                                    color: Color.fromARGB(255, 35, 34, 33)))),
+                      )
                     ],
                   ),
                 )

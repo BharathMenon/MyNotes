@@ -52,34 +52,53 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Forgot Password'),
+          backgroundColor: const Color.fromARGB(255, 35, 34, 33),
         ),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
           child: SingleChildScrollView(
             child: Column(children: [
-              const Text(
-                  'If you forgot your password, simply enter your email, and we will send you a password reset link.'),
-              TextField(
-                keyboardType: TextInputType.emailAddress,
-                autocorrect: false,
-                autofocus: true,
-                controller: _controller,
-                decoration:
-                    const InputDecoration(hintText: 'Your email address...'),
+              const SizedBox(
+                height: 98,
+                child: Text(
+                  'If you forgot your password, simply enter your email, and we will send you a password reset link.',
+                  style: TextStyle(fontFamily: 'REM', fontSize: 18),
+                ),
               ),
-              TextButton(
-                onPressed: () {
-                  final email = _controller.text;
-                  context.read<AuthBloc>().add(AuthEventForgotPassword(email));
-                },
-                child: const Text('Send me a password reset link'),
+              SizedBox(
+                height: 75,
+                child: TextField(
+                  keyboardType: TextInputType.emailAddress,
+                  autocorrect: false,
+                  autofocus: true,
+                  controller: _controller,
+                  decoration: const InputDecoration(
+                      hintText: 'Your email address...',
+                      hintStyle: TextStyle(
+                          fontStyle: FontStyle.italic,
+                          color: Color.fromARGB(255, 183, 181, 173))),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(18.0),
+                child: TextButton(
+                  onPressed: () {
+                    final email = _controller.text;
+                    context
+                        .read<AuthBloc>()
+                        .add(AuthEventForgotPassword(email));
+                  },
+                  child: const Text('Send me a password reset link',
+                      style: TextStyle(color: Color.fromARGB(255, 35, 34, 33))),
+                ),
               ),
               TextButton(
                 onPressed: () {
                   context.read<AuthBloc>().add(
                       const AuthEventLogOut()); // Sends user to Login Page.
                 },
-                child: const Text('Back to Login Page'),
+                child: const Text('Back to Login Page',
+                    style: TextStyle(color: Color.fromARGB(255, 35, 34, 33))),
               )
             ]),
           ),

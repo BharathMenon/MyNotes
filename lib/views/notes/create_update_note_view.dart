@@ -93,6 +93,7 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('New Note'),
+        backgroundColor: const Color.fromARGB(255, 35, 34, 33),
         actions: [
           IconButton(
             onPressed: () async {
@@ -113,12 +114,18 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
           switch (snapshot.connectionState) {
             case ConnectionState.done:
               _setuptextcontrollerListener();
-              return TextField(
-                controller: _textController,
-                keyboardType: TextInputType.multiline,
-                maxLines: null,
-                decoration: const InputDecoration(
-                  hintText: 'Start typing here...',
+              return Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 18, horizontal: 13),
+                child: TextField(
+                  controller: _textController,
+                  keyboardType: TextInputType.multiline,
+                  maxLines: null,
+                  decoration: const InputDecoration(
+                      hintText: 'Start typing here...',
+                      hintStyle: TextStyle(
+                          fontStyle: FontStyle.italic,
+                          color: Color.fromARGB(255, 183, 181, 173))),
                 ),
               );
             default:

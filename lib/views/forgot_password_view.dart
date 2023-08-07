@@ -5,7 +5,7 @@ import 'package:mynotes/services/auth/bloc/auth_events.dart';
 import 'package:mynotes/services/auth/bloc/auth_state.dart';
 import 'package:mynotes/utilities/utilities/dialogs/error_dialog.dart';
 import 'package:mynotes/utilities/utilities/dialogs/password_reset_email_sent_dialog.dart';
-
+import 'package:flutter_svg/flutter_svg.dart';
 import '../services/auth/bloc/auth_bloc.dart';
 
 class ForgotPasswordView extends StatefulWidget {
@@ -31,6 +31,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) async {
         if (state is AuthStateForgotPassword) {
@@ -63,6 +64,14 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
                 child: Text(
                   'If you forgot your password, simply enter your email, and we will send you a password reset link.',
                   style: TextStyle(fontFamily: 'REM', fontSize: 18),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(6.0),
+                child: SvgPicture.asset(
+                  "assets/icon/forgot_password.svg",
+                  height: size.height * 0.3,
+                  alignment: Alignment.centerRight,
                 ),
               ),
               SizedBox(

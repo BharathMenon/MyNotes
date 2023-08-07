@@ -4,7 +4,7 @@ import 'package:mynotes/constants/routes.dart';
 import 'package:mynotes/services/auth/auth_exceptions.dart';
 import 'package:mynotes/services/auth/auth_service.dart';
 import 'package:mynotes/services/auth/bloc/auth_events.dart';
-
+import 'package:flutter_svg/flutter_svg.dart';
 import 'dart:developer' as devtools show log;
 
 import '../firebase_options.dart';
@@ -38,6 +38,7 @@ class _RegisterViewState extends State<RegisterView> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) async {
         if (state is AuthStateRegistering) {
@@ -71,13 +72,21 @@ class _RegisterViewState extends State<RegisterView> {
                     style: TextStyle(fontFamily: 'REM', fontSize: 18),
                   ),
                 ),
+                Padding(
+                  padding: const EdgeInsets.all(9.0),
+                  child: SvgPicture.asset(
+                    "assets/icon/Register.svg",
+                    height: size.height * 0.3,
+                    alignment: Alignment.centerRight,
+                  ),
+                ),
                 Column(
                   children: [
                     TextField(
                         controller: _email,
                         enableSuggestions: false,
                         autocorrect: false,
-                        autofocus: true,
+                        autofocus: false,
                         keyboardType: TextInputType.emailAddress,
                         decoration: const InputDecoration(
                             hintText: 'Enter your email here',

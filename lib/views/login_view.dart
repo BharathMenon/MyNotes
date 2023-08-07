@@ -6,6 +6,7 @@ import 'package:mynotes/services/auth/bloc/auth_bloc.dart';
 import 'package:mynotes/services/auth/bloc/auth_events.dart';
 import 'package:mynotes/services/auth/bloc/auth_state.dart';
 import 'package:mynotes/utilities/utilities/dialogs/loading_dialog.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'dart:developer' as devtools show log;
 import '../firebase_options.dart';
 import '../utilities/utilities/dialogs/error_dialog.dart';
@@ -38,6 +39,7 @@ class _LoginViewState extends State<LoginView> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) async {
         if (state is AuthStateLoggedOut) {
@@ -69,7 +71,14 @@ class _LoginViewState extends State<LoginView> {
                     style: TextStyle(fontFamily: 'REM', fontSize: 18),
                   ),
                 ),
-
+                Padding(
+                  padding: const EdgeInsets.all(9.0),
+                  child: SvgPicture.asset(
+                    "assets/icon/login_page_img.svg",
+                    height: size.height * 0.3,
+                    alignment: Alignment.centerRight,
+                  ),
+                ),
                 //height: 0.0,
                 TextField(
                     controller: _email,
